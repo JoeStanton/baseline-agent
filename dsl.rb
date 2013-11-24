@@ -1,7 +1,12 @@
 require 'docile'
 
 class Node
-  attr_accessor :name
+  attr_accessor :name, :dependencies
+  
+  def initialize(name)
+    @name = name
+    @dependencies = []
+  end
 
   def description(value = nil)
     if value
@@ -10,13 +15,17 @@ class Node
       @description
     end
   end
+
+  def dependency(name)
+    @dependencies << name
+  end
 end
 
 class Service < Node
   attr_accessor :components
 
   def initialize(name)
-    @name = name
+    super
     @components = []
   end
 
@@ -37,9 +46,6 @@ class Service < Node
 end
 
 class Component < Node
-  def initialize(name)
-    @name = name
-  end
 end
 
 # DSL entry point
