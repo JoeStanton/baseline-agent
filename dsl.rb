@@ -1,4 +1,25 @@
 require 'docile'
+require 'ruby-units'
+
+def cpu_usage
+  Unit('50%')
+end
+
+def memory_usage
+  Unit('500MB')
+end
+
+def success?(url)
+  true
+end
+
+def response_time(url)
+  '1s'
+end
+
+def redis_key_size
+  1000
+end
 
 class DSL
   def self.load(file)
@@ -33,7 +54,7 @@ end
 
 class Node
   attr_accessor :name, :dependencies
-  
+
   def initialize(name)
     @name = name
     @dependencies = []

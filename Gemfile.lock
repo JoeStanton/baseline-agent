@@ -1,9 +1,15 @@
+GIT
+  remote: git://github.com/olbrich/ruby-units.git
+  revision: e43520863a535d7d4c4b5d06e4c9c8ca1183f9f9
+  specs:
+    ruby-units (1.4.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
     colorize (0.6.0)
     diff-lcs (1.2.5)
-    docile (1.1.0)
+    docile (1.1.1)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -20,3 +26,4 @@ DEPENDENCIES
   colorize
   docile
   rspec
+  ruby-units!
