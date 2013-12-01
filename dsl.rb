@@ -1,16 +1,20 @@
 require 'docile'
 require 'ruby-units'
+require 'open-uri'
+
+def success?(url)
+  open url
+  true
+rescue Exception => e
+  false
+end
 
 def cpu_usage
   Unit('50%')
 end
 
 def memory_usage
-  Unit('500MB')
-end
-
-def success?(url)
-  true
+  Unit('51MB')
 end
 
 def response_time(url)

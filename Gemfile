@@ -5,3 +5,4 @@ gem 'docile'
 gem 'colorize'
 
 gem 'ruby-units', github: 'olbrich/ruby-units'
+gem 'ruby-graphviz'
