@@ -28,4 +28,4 @@ system.services.each do |service|
   end
 end
 
-g.output( :png => "graph.png" )
+g.output( :svg => "graph.svg" )
