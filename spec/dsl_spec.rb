@@ -9,7 +9,7 @@ describe 'System' do
   it 'should keep track of declared services' do
     example = nil
     system = parse {
-      example = service 'JLT Workspace +'
+      example = service 'Workspace +'
     }
     system.services.should == [ example ]
   end
@@ -19,16 +19,16 @@ describe 'Service' do
   it 'should be specified with a name' do
     example = nil
     parse {
-      example = service 'JLT Workspace +'
+      example = service 'Workspace +'
     }
     example.should be_a Service
-    example.name.should == 'JLT Workspace +'
+    example.name.should == 'Workspace +'
   end
 
   it 'should take a description' do
     example = nil
     parse {
-      example = service 'JLT Workspace+' do
+      example = service 'Workspace+' do
         description 'Example service'
       end
     }
@@ -38,7 +38,7 @@ describe 'Service' do
   it 'should take and execute a health check' do
     example = nil
     parse {
-      example = service 'JLT Workspace+' do
+      example = service 'Workspace+' do
         health do
           true
         end
@@ -50,7 +50,7 @@ describe 'Service' do
   it 'should take dependencies' do
     example = nil
     parse {
-      example = service 'JLT Workspace +' do
+      example = service 'Workspace +' do
         dependency 'Sharepoint API'
         dependency 'ADFS Authentication'
       end
@@ -62,11 +62,11 @@ describe 'Service' do
   it 'should take components' do
     example = nil
     parse {
-      example = service 'JLT Workspace +' do
+      example = service 'Workspace +' do
         component 'Web Server'
         component 'Application'
       end
-    }
+   }
 
     example.components.should have(2).items
     example.components.first.should be_a Component
@@ -78,7 +78,7 @@ describe 'Component' do
   it 'should take a description' do
     example = nil
     parse {
-      example = service 'JLT Workspace +' do
+      example = service 'Workspace +' do
         component 'Web Server' do
           description 'Reverse proxy the app'
         end
@@ -88,10 +88,38 @@ describe 'Component' do
     example.components.first.description.should == 'Reverse proxy the app'
   end
 
+  it 'should take a private port' do
+    example = nil
+    parse {
+      service 'Workspace +' do
+        example = component 'Web Server' do
+          description 'Reverse proxy the app'
+          listen 8000
+        end
+      end
+    }
+
+    example.private_ports.should == [8000]
+  end
+
+  it 'should take a private port' do
+    example = nil
+    parse {
+      service 'Workspace +' do
+        example = component 'Web Server' do
+          description 'Reverse proxy the app'
+          public_listen 80
+        end
+      end
+    }
+
+    example.public_ports.should == [80]
+  end
+
   it 'should take and execute a health check' do
     example = nil
     parse {
-      service 'JLT Workspace+' do
+      service 'Workspace+' do
         example = component 'Web Server' do
           health do
             true
@@ -105,7 +133,7 @@ describe 'Component' do
   it 'should take dependencies' do
     example = nil
     parse {
-      example = service 'JLT Workspace +' do
+      example = service 'Workspace +' do
         component 'Web Server' do
           dependency 'Application'
           dependency 'OS'
