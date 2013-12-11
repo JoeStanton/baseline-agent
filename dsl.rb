@@ -2,10 +2,27 @@ require 'docile'
 require 'ruby-units'
 require 'open-uri'
 
+require 'socket'
+require 'timeout'
+
 def success?(url)
   open url
   true
 rescue Exception => e
+  false
+end
+
+def listening?(port)
+  Timeout::timeout(1) do
+    begin
+      s = TCPSocket.new("127.0.0.1", port)
+      s.close
+      return true
+    rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+      return false
+    end
+  end
+rescue Timeout::Error
   false
 end
 
@@ -62,6 +79,8 @@ class Node
   def initialize(name)
     @name = name
     @dependencies = []
+    @private_ports = []
+    @public_ports = []
   end
 
   def description(value = nil)
@@ -102,4 +121,13 @@ class Service < Node
 end
 
 class Component < Node
+  attr_accessor :private_ports, :public_ports
+
+  def listen(port)
+    @private_ports << port
+  end
+
+  def public_listen(port)
+    @public_ports << port
+  end
 end
