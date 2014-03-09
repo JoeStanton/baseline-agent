@@ -118,7 +118,7 @@ class Node
     end
   end
 
-  def health(options = nil, &block)
+  def health(options = {}, &block)
     if block_given?
       @check_interval = options[:interval] || 30
       @health = block
