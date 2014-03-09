@@ -9,4 +9,6 @@ gem 'ruby-graphviz'
 gem 'rspec'
 gem 'simplecov', :require => false, :group => :test
 
+gem 'thor'
+
 gem 'riemann-client'
