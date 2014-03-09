@@ -1,8 +1,11 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'simplecov'
 SimpleCov.start
 
 require 'rspec'
-require './dsl'
+require_relative '../lib/dsl'
 
 def parse(&block)
   DSL.parse &block
