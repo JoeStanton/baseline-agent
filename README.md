@@ -1,4 +1,6 @@
-# lighthouse-agent [![Build Status](https://travis-ci.org/JoeStanton/lighthouse-agent.png)](https://travis-ci.org/JoeStanton/lighthouse-agent)
+# lighthouse-agent
+[![Build Status](https://travis-ci.org/JoeStanton/lighthouse-agent.png)](https://travis-ci.org/JoeStanton/lighthouse-agent)
+[![Code Climate](https://codeclimate.com/github/JoeStanton/lighthouse-agent.png)](https://codeclimate.com/github/JoeStanton/lighthouse-agent)
 
 Express a system and its dependencies conveniently using a DSL. Execute
 this description to validate a deployment and feed metrics back to a
