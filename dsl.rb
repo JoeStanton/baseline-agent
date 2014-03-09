@@ -5,14 +5,14 @@ require 'open-uri'
 require 'socket'
 require 'timeout'
 
-def success?(url)
+def success(url)
   open url
   true
 rescue Exception => e
   false
 end
 
-def listening?(port)
+def listening(port)
   Timeout::timeout(1) do
     begin
       s = TCPSocket.new("127.0.0.1", port)
@@ -26,16 +26,30 @@ rescue Timeout::Error
   false
 end
 
-def cpu_usage
-  Unit('50%')
+def cpu_load_average
+  0.9
 end
 
 def memory_usage
   Unit('51MB')
 end
 
+def disk_usage(mount = "/")
+  `df -P`.lines.each do |r|
+    f = r.split(/\s+/)
+    if f[5] == mount
+      return Unit.new(f[4])
+    end
+  end
+end
+
 def response_time(url)
   '1s'
+end
+
+def running(process)
+  `pgrep #{process}`
+  $?.success?
 end
 
 def redis_key_size
@@ -74,7 +88,7 @@ class System
 end
 
 class Node
-  attr_accessor :name, :dependencies
+  attr_accessor :name, :dependencies, :check_interval, :host_check_interval
 
   def initialize(name)
     @name = name
@@ -95,8 +109,22 @@ class Node
     @dependencies << name
   end
 
-  def health(&block)
-    @health = block
+  def host_health(options = nil, &block)
+    if block_given?
+      @host_check_interval = options[:interval] || 30
+      @host_health = block
+    else
+      @host_health
+    end
+  end
+
+  def health(options = nil, &block)
+    if block_given?
+      @check_interval = options[:interval] || 30
+      @health = block
+    else
+      @health
+    end
   end
 
   def healthy?
