@@ -5,6 +5,7 @@ require 'bundler/setup'
 require 'thor'
 require 'colorize'
 
+require_relative 'lib/configuration'
 require_relative 'lib/dsl'
 
 Bundler.setup
@@ -19,6 +20,7 @@ class LighthouseAgent < Thor
   end
 end
 
+require_relative 'commands/setup'
 require_relative 'commands/check'
 
 LighthouseAgent.start(ARGV)
