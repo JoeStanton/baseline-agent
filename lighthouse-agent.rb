@@ -1,8 +1,22 @@
 #!/usr/bin/env ruby
+require 'rubygems'
+require 'bundler/setup'
+
 require 'thor'
+require 'colorize'
+
+require_relative 'lib/dsl'
+
+Bundler.setup
 
 class LighthouseAgent < Thor
   VERSION = 0.1
+
+  no_commands do
+    def load_system(system)
+      @system = DSL.load system
+    end
+  end
 end
 
 require_relative 'commands/check'
