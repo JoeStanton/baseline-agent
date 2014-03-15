@@ -72,6 +72,10 @@ class Node
     end
   end
 
+  def host_healthy?
+    Checks.execute(&@host_health) if @host_health
+  end
+
   def health(options = {}, &block)
     if block_given?
       @check_interval = options[:interval] || 30

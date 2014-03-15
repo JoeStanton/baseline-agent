@@ -53,6 +53,18 @@ describe 'Service' do
     example.healthy?.should == true
   end
 
+  it 'should take and execute a host health check' do
+    example = nil
+    parse {
+      example = service 'Workspace+' do
+        host_health(interval:15) do
+          true
+        end
+      end
+    }
+    example.host_healthy?.should == true
+  end
+
   it 'should take dependencies' do
     example = nil
     parse {

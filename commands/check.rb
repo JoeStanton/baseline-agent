@@ -4,9 +4,10 @@ class LighthouseAgent
   def check(system)
     load_system(system).services.each do |service|
       puts "checking service #{service.name} : #{healthy_to_s(service.healthy?)}"
+      puts "    checking Host : #{healthy_to_s(service.host_healthy?)}"
 
-      service.components.each do |component| 
-        puts "   checking #{component.name} : #{healthy_to_s(component.healthy?)}"
+      service.components.each do |component|
+        puts "    checking #{component.name} : #{healthy_to_s(component.healthy?)}"
       end
     end
   end
