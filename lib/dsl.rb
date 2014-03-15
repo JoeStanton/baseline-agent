@@ -5,56 +5,7 @@ require 'open-uri'
 require 'socket'
 require 'timeout'
 
-def success(url)
-  open url
-  true
-rescue Exception => e
-  false
-end
-
-def listening(port)
-  Timeout::timeout(1) do
-    begin
-      s = TCPSocket.new("127.0.0.1", port)
-      s.close
-      return true
-    rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-      return false
-    end
-  end
-rescue Timeout::Error
-  false
-end
-
-def cpu_load_average
-  0.9
-end
-
-def memory_usage
-  Unit('51MB')
-end
-
-def disk_usage(mount = "/")
-  `df -P`.lines.each do |r|
-    f = r.split(/\s+/)
-    if f[5] == mount
-      return Unit.new(f[4])
-    end
-  end
-end
-
-def response_time(url)
-  '1s'
-end
-
-def running(process)
-  `pgrep #{process}`
-  $?.success?
-end
-
-def redis_key_size
-  1000
-end
+require './lib/checks'
 
 class DSL
   def self.load(file)
@@ -87,8 +38,11 @@ class System
   end
 end
 
+require 'hashifiable'
 class Node
   attr_accessor :name, :dependencies, :check_interval, :host_check_interval
+
+  extend Hashifiable
 
   def initialize(name)
     @name = name
@@ -128,12 +82,13 @@ class Node
   end
 
   def healthy?
-    @health.call if @health
+    Checks.execute(&@health) if @health
   end
 end
 
 class Service < Node
   attr_accessor :components
+  hashify :name, :description, components: -> { components.map(&:to_hash) }
 
   def initialize(name)
     super
@@ -150,6 +105,7 @@ end
 
 class Component < Node
   attr_accessor :private_ports, :public_ports
+  hashify :name, :description
 
   def listen(port)
     @private_ports << port

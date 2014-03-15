@@ -13,7 +13,7 @@ class Configuration
     File.open('./config.yml', 'w') {|f| f.write self.to_yaml }
   end
 
-  def load
+  def self.load
     config = File.read('./config.yml')
     YAML.load(config)
   end

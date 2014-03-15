@@ -25,5 +25,6 @@ require_relative 'commands/setup'
 require_relative 'commands/check'
 require_relative 'commands/monitor'
 require_relative 'commands/discover'
+require_relative 'commands/push'
 
 LighthouseAgent.start(ARGV)

@@ -8,7 +8,7 @@ class LighthouseAgent
   def start_monitor(system)
     return puts 'Must run as root'.red unless Process.uid == 0
     system = load_system(system)
-    Dante::Runner.new(process_name(system)).execute(daemonize: true) { monitor(system) }
+    Dante::Runner.new(process_name(system)).execute(daemonize: true) { Monitor.start!(system) }
   end
 
   desc :stop_monitor, "Stop monitoring the specified service"
@@ -20,7 +20,7 @@ class LighthouseAgent
 
   no_commands {
     def process_name(system)
-      "Lighthouse Agent - #{system.services.first.name}"
+      "lighthouse-#{to_slug(system.services.first.name)}"
     end
   }
 

@@ -11,6 +11,7 @@ gem 'simplecov', :require => false, :group => :test
 
 gem 'thor'
 gem 'rest-client'
+gem 'hashifiable'
 
 gem 'dante'
 

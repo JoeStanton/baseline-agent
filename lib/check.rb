@@ -27,7 +27,7 @@ class Check
   def start!
     @thread = Thread.new do
       while true
-        report(@check.call)
+        report(Checks.execute(&@check))
         sleep @interval
       end
     end
