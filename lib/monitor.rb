@@ -7,11 +7,33 @@ class Monitor
 
     checks = []
     system.services.each do |service|
-      checks << Check.new(service.name, service.check_interval, r, service.health)
-      checks << Check.new("Host", service.host_check_interval, r, service.host_health)
+      checks << Check.new(
+        name: service.name,
+        type: :service,
+        service: service.name,
+        interval: service.check_interval,
+        client: r,
+        check: service.health,
+      ) if service.health
+
+      checks << Check.new(
+        name: 'Host',
+        type: :host,
+        interval: service.host_check_interval,
+        client: r,
+        check: service.host_health,
+      ) if service.host_health
 
       service.components.each do |component|
-        checks << Check.new(component.name, service.check_interval, r, component.health)
+        checks << Check.new(
+          name: component.name,
+          type: :component,
+          service: service.name,
+          component: component.name,
+          interval: service.check_interval,
+          client: r,
+          check: component.health
+        ) if component.health
       end
     end
 

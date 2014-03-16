@@ -17,6 +17,13 @@ class LighthouseAgent
     system = load_system(system)
     Dante::Runner.new(process_name(system)).execute(kill: true)
   end
+  
+  desc :restart_monitor, "Restart monitoring the specified service"
+  def restart_monitor(system)
+    return puts 'Must run as root'.red unless Process.uid == 0
+    stop_monitor(system)
+    start_monitor(system)
+  end
 
   no_commands {
     def process_name(system)
