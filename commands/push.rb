@@ -7,13 +7,7 @@ class LighthouseAgent
     load_system(system).services.each do |service|
       config = Configuration.load
       data = { service: service.to_hash }
-      RestClient.put "#{config.management_server}/services/#{to_slug(service.name)}", data.to_json, content_type: :json
+      RestClient.put "#{config.management_server}/services/#{StringHelpers.slugify(service.name)}", data.to_json, content_type: :json
     end
   end
-
-  no_commands {
-    def to_slug(str)
-      str.downcase.gsub(/[^a-z1-9]+/, '-').chomp('-')
-    end
-  }
 end

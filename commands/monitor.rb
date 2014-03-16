@@ -20,7 +20,7 @@ class LighthouseAgent
 
   no_commands {
     def process_name(system)
-      "lighthouse-#{to_slug(system.services.first.name)}"
+      "lighthouse-#{StringHelpers.slugify(system.services.first.name)}"
     end
   }
 

@@ -7,6 +7,7 @@ require 'colorize'
 
 require_relative 'lib/configuration'
 require_relative 'lib/dsl'
+require_relative 'lib/string_helpers'
 
 Bundler.setup
 
