@@ -3,7 +3,8 @@ require_relative 'check'
 
 class Monitor
   def self.start!(system)
-    r = Riemann::Client.new
+    baseline_host = URI.parse(Configuration.load.management_server).host
+    r = Riemann::Client.new(host: baseline_host)
 
     checks = []
     system.services.each do |service|
