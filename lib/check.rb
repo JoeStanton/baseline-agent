@@ -16,7 +16,7 @@ class Check
   end
 
   def report(status)
-    @client << {
+    @client.tcp << {
       host: @host,
       service: @service,
       component: @component,
