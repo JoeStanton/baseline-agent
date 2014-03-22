@@ -1,11 +1,10 @@
 require 'docile'
-require 'ruby-units'
 require 'open-uri'
 
 require 'socket'
 require 'timeout'
 
-require './lib/checks'
+require_relative './checks'
 
 class DSL
   def self.load(file)

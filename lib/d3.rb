@@ -1,4 +1,4 @@
-require './dsl'
+require_relative './dsl'
 require 'json'
 
 class Graph

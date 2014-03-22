@@ -1,4 +1,4 @@
-require './lib/graph'
+require_relative '../lib/graph'
 
 class LighthouseAgent
   desc :graph, 'Render a graph of the current service'

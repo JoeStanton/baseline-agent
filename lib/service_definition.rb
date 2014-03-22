@@ -8,7 +8,8 @@ class ServiceDefinition
   end
 
   def render
-    template = File.read 'lib/service_definition.erb'
+    base_path = File.expand_path(File.dirname(__FILE__))
+    template = File.read "#{base_path}/service_definition.erb"
     ERB.new(template).result(binding)
   end
 end

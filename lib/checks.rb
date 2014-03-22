@@ -1,3 +1,5 @@
+require 'ruby-units'
+
 module Checks
   def self.execute(&block)
     self.instance_eval &block

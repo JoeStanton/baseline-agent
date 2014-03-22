@@ -1,5 +1,5 @@
 require 'socket'
-require './lib/string_helpers'
+require_relative 'string_helpers'
 
 class Check
   attr_reader :thread

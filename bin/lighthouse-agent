@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'bundler'
+Dir.chdir File.dirname(__FILE__) do
+  Bundler.setup
+end
+
+require 'thor'
+require 'colorize'
+
+require_relative '../lib/configuration'
+require_relative '../lib/dsl'
+require_relative '../lib/string_helpers'
+
+class LighthouseAgent < Thor
+  VERSION = 0.1
+
+  no_commands do
+    def load_system(system)
+      @system = DSL.load system
+    end
+  end
+end
+
+require_relative '../commands/validate'
+require_relative '../commands/setup'
+require_relative '../commands/check'
+require_relative '../commands/graph'
+require_relative '../commands/monitor'
+require_relative '../commands/discover'
+require_relative '../commands/push'
+
+LighthouseAgent.start(ARGV)
