@@ -31,7 +31,7 @@ class Monitor
           type: :component,
           service: service.name,
           component: component.name,
-          interval: service.check_interval,
+          interval: component.check_interval,
           client: r,
           check: component.health
         ) if component.health
