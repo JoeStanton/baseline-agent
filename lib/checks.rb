@@ -48,7 +48,7 @@ module Checks
   end
 
   def self.running(process)
-    `pgrep #{process}`
+    `pgrep -f #{process}`
     $?.success?
   end
 end
