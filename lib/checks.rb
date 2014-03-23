@@ -23,10 +23,9 @@ module Checks
       if uri.user && uri.password
         req.basic_auth uri.user, uri.password
       end
-      http.request(req)
+      response = http.request(req)
+      response.kind_of?(Net::HTTPSuccess) || response.kind_of?(Net::HTTPRedirection)
     end
-
-    true
   end
 
   def self.listening(port)
