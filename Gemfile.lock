@@ -16,6 +16,7 @@ GEM
     mime-types (2.1)
     mtrc (0.0.4)
     multi_json (1.8.2)
+    open_uri_redirections (0.1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     riemann-client (0.2.2)
@@ -47,6 +48,7 @@ DEPENDENCIES
   dante
   docile
   hashifiable
+  open_uri_redirections
   rest-client
   riemann-client
   rspec

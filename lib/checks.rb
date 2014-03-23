@@ -1,15 +1,32 @@
 require 'ruby-units'
+require 'open_uri_redirections'
 
 module Checks
   def self.execute(&block)
     self.instance_eval &block
   end
 
-  def self.success(url)
-    open url
+  def self.success(url, options={})
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host ,uri.port)
+
+    http.use_ssl = url =~ %r{\Ahttps://}
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    http.open_timeout = options[:timeout] || 10
+
+    http.start do |http|
+      req = Net::HTTP::Head.new(uri.request_uri)
+      req['User-Agent'] = "LighthouseAgent"
+      req['Host'] = uri.host
+
+      if uri.user && uri.password
+        req.basic_auth uri.user, uri.password
+      end
+      http.request(req)
+    end
+
     true
-  rescue Exception => e
-    false
   end
 
   def self.listening(port)

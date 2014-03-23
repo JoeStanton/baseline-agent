@@ -14,5 +14,6 @@ gem 'rest-client'
 gem 'hashifiable'
 
 gem 'dante'
+gem 'open_uri_redirections'
 
 gem 'riemann-client'
