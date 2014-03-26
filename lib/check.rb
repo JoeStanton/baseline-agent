@@ -29,6 +29,8 @@ class Check
       notify_endpoint: notify_endpoint,
       ttl: @interval*2
     }
+  rescue
+    $STDERR.puts "Failed to contact Baseline server, check firewalls and system status"
   end
 
   def notify_endpoint
