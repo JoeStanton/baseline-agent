@@ -8,12 +8,11 @@ class LighthouseAgent
 
   def setup(url)
     params = {
-        hostname: Socket.gethostname,
-        service_slug: options.service,
-        environment: options.environment
+      service_slug: options.service,
+      environment: options.environment
     }
 
-    RestClient.post "#{url}/hosts/", { host: params }.to_json, content_type: :json
+    RestClient.put "#{url}/hosts/#{Socket.gethostname}", { host: params }.to_json, content_type: :json
     Configuration.new(management_server: url).save
   end
 end
