@@ -18,7 +18,8 @@ class Check
   def report(status)
     @client.tcp << {
       host: @host,
-      service: @service,
+      service: notify_endpoint,
+      service_name: @service,
       component: @component,
       description: @name,
       state: status ? 'ok' : 'error',
