@@ -23,7 +23,13 @@ module Checks
       if uri.user && uri.password
         req.basic_auth uri.user, uri.password
       end
+
+    begin
       response = http.request(req)
+    rescue Exception => e
+      false
+    end
+
       response.kind_of?(Net::HTTPSuccess) || response.kind_of?(Net::HTTPRedirection)
     end
   end
