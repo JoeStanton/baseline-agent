@@ -15,13 +15,13 @@ class Check
     @component = opts[:component]
   end
 
-  def report(status)
+  def report(status, description)
     @client.tcp << {
       host: @host,
       service: notify_endpoint,
       service_name: @service,
       component: @component,
-      description: @name,
+      description: description,
       state: status ? 'ok' : 'error',
       metric: status ? 1 : 0,
       type: @type,
@@ -45,8 +45,17 @@ class Check
   def start!
     @thread = Thread.new do
       while true
-        report(Checks.execute(&@check))
-        sleep @interval
+        result = false
+        description = "Passed"
+        begin
+          Checks.execute(&@check)
+        rescue Exception => e
+          result = false
+          description = e.message
+        ensure
+          report(result, description)
+          sleep @interval
+        end
       end
     end
   end
