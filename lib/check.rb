@@ -45,15 +45,12 @@ class Check
   def start!
     @thread = Thread.new do
       while true
-        result = false
-        description = "Passed"
         begin
           Checks.execute(&@check)
+          report(true, 'Passed')
         rescue Exception => e
-          result = false
-          description = e.message
+          report(false, e.message)
         ensure
-          report(result, description)
           sleep @interval
         end
       end
