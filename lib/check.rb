@@ -48,8 +48,8 @@ class Check
     @thread = Thread.new do
       while true
         begin
-          Checks.execute(&@check)
-          report(true, 'Passed')
+          result, message = Checks.execute(&@check)
+          report(result, message)
         rescue Exception => e
           report(false, e.message)
         ensure

@@ -27,7 +27,7 @@ module Checks
     begin
       response = http.request(req)
     rescue Exception => e
-      false
+      [false, e.message]
     end
 
       response.kind_of?(Net::HTTPSuccess) || response.kind_of?(Net::HTTPRedirection)
@@ -41,11 +41,11 @@ module Checks
         s.close
         return true
       rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-        return false
+        [false, "Socket connection refused"]
       end
     end
   rescue Timeout::Error
-    false
+    [false, "Socket timed out"]
   end
 
   def self.cpu_load_average
