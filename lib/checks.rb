@@ -16,7 +16,7 @@ module Checks
     http.use_ssl = url =~ %r{\Ahttps://}
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-    http.open_timeout = options[:timeout] || 10
+    http.open_timeout = options[:timeout] || 15
 
     http.start do |http|
       req = Net::HTTP::Head.new(uri.request_uri)
