@@ -13,14 +13,16 @@ class LighthouseAgent
   end
 
   no_commands do
-    def healthy_to_s(status)
-      case status 
+    def healthy_to_s(result)
+      status, message = result
+
+      case status
       when true
-        'Healthy'.green 
+        "Healthy".green 
       when nil
-        'Unknown'.yellow
+        "Unknown".yellow
       when false
-        'Error'.red
+        "Error - #{message}".red
       end
     end
   end

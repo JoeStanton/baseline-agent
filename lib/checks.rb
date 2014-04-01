@@ -4,6 +4,8 @@ require 'open_uri_redirections'
 module Checks
   def self.execute(&block)
     self.instance_eval &block
+  rescue Exception => e
+    [false, e.message]
   end
 
   def self.success(url, options={})
@@ -24,12 +26,7 @@ module Checks
         req.basic_auth uri.user, uri.password
       end
 
-    begin
       response = http.request(req)
-    rescue Exception => e
-      [false, e.message]
-    end
-
       response.kind_of?(Net::HTTPSuccess) || response.kind_of?(Net::HTTPRedirection)
     end
   end
@@ -41,11 +38,11 @@ module Checks
         s.close
         return true
       rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-        [false, "Socket connection refused"]
+        raise "Socket connection refused"
       end
     end
   rescue Timeout::Error
-    [false, "Socket timed out"]
+    raise "Socket timed out"
   end
 
   def self.cpu_load_average
@@ -71,6 +68,8 @@ module Checks
 
   def self.running(process)
     `pgrep -f "#{process}"`
-    $?.success?
+    result = $?.success?
+    raise "Process #{process} not running" unless result
+    result
   end
 end
