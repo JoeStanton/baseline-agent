@@ -21,7 +21,7 @@ class LighthouseAgent
   desc :restart, "Restart monitoring the specified service"
   def restart(system)
     return puts 'Must run as root'.red unless Process.uid == 0
-    stop_monitor(system)
+    stop(system)
     start_monitor(system)
   end
 
