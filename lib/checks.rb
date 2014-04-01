@@ -76,7 +76,7 @@ module Checks
   def self.running(process)
     `ps aux | grep "#{process}" | grep -v grep`
     fail "Process #{process} not running" unless $?.success?
-    result
+    true
   end
 
   def self.process_info(process)
