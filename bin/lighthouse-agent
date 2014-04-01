@@ -1,8 +1,11 @@
 #!/usr/bin/env ruby
 require 'bundler'
-Dir.chdir File.dirname(__FILE__) do
+Dir.chdir File.join(File.dirname(__FILE__), '..') do
   Bundler.setup
 end
+
+require 'redis'
+Redis.new
 
 require 'thor'
 require 'colorize'
