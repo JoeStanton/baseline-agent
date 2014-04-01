@@ -74,9 +74,8 @@ module Checks
   end
 
   def self.running(process)
-    `pgrep -f "#{process}"`
-    result = $?.success?
-    fail "Process #{process} not running" unless result
+    `ps aux | grep "#{process}" | grep -v grep`
+    fail "Process #{process} not running" unless $?.success?
     result
   end
 
