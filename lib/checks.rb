@@ -9,10 +9,6 @@ module Checks
     [false, e.message]
   end
 
-  def self.failed(message)
-    raise message
-  end
-
   def self.success(url, options={})
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host ,uri.port)

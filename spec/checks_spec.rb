@@ -9,7 +9,7 @@ describe Checks do
     end
 
     it "should swallow exceptions and return a fail tuple with details" do
-      result, message = Checks.execute { failed 'A failed assertion' }
+      result, message = Checks.execute { fail 'A failed assertion' }
       result.should be_false
       message.should == 'A failed assertion'
     end
