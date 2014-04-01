@@ -62,7 +62,7 @@ class Node
     @dependencies << name
   end
 
-  def host_health(options = nil, &block)
+  def host_health(options = {}, &block)
     if block_given?
       @host_check_interval = options[:interval] || 30
       @host_health = block
