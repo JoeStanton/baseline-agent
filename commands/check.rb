@@ -2,12 +2,13 @@ class LighthouseAgent
   desc :check, "Run configured health checks"
 
   def check(system)
+    check_baseline_connectivity!
     load_system(system).services.each do |service|
-      puts "checking service #{service.name} : #{healthy_to_s(service.healthy?)}"
-      puts "    checking Host : #{healthy_to_s(service.host_healthy?)}"
+      puts "Service: #{service.name} : #{healthy_to_s(service.healthy?)}"
+      puts "    Host: #{healthy_to_s(service.host_healthy?)}"
 
       service.components.each do |component|
-        puts "    checking #{component.name} : #{healthy_to_s(component.healthy?)}"
+        puts "    #{component.name}: #{healthy_to_s(component.healthy?)}"
       end
     end
   end
@@ -24,6 +25,21 @@ class LighthouseAgent
       when false
         "Error - #{message}".red
       end
+    end
+
+    def check_baseline_connectivity!
+      if Configuration.load.management_server
+        baseline_host = URI.parse(Configuration.load.management_server).host
+        r = Riemann::Client.new(host: baseline_host)
+        r.tcp << { name: "Ping", tags: "ping" }
+        status = "OK".green
+      else
+         status = "Not Configured".yellow
+      end
+    rescue
+      status = "Unreachable".red
+    ensure
+      puts "Baseline Connectivity: #{status}"
     end
   end
 end
