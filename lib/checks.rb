@@ -29,7 +29,7 @@ module Checks
 
       response = http.request(req)
       unless response.kind_of?(Net::HTTPSuccess) || response.kind_of?(Net::HTTPRedirection)
-        failed "Unexpected response #{response.class}" 
+        fail "Unexpected response #{response.class}" 
       end
     end
   end
@@ -41,11 +41,11 @@ module Checks
         s.close
         return true
       rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-        failed "Socket connection refused"
+        fail "Socket connection refused"
       end
     end
   rescue Timeout::Error
-    failed "Socket timed out"
+    fail "Socket timed out"
   end
 
   def self.cpu_load_average
@@ -76,7 +76,7 @@ module Checks
   def self.running(process)
     `pgrep -f "#{process}"`
     result = $?.success?
-    failed "Process #{process} not running" unless result
+    fail "Process #{process} not running" unless result
     result
   end
 
