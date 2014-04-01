@@ -2,7 +2,6 @@ class LighthouseAgent
   desc :check, "Run configured health checks"
 
   def check(system)
-    check_baseline_connectivity!
     load_system(system).services.each do |service|
       puts "Service: #{service.name} : #{healthy_to_s(service.healthy?)}"
       puts "    Host: #{healthy_to_s(service.host_healthy?)}"
@@ -11,6 +10,8 @@ class LighthouseAgent
         puts "    #{component.name}: #{healthy_to_s(component.healthy?)}"
       end
     end
+    puts
+    check_baseline_connectivity!
   end
 
   no_commands do
