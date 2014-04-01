@@ -1,11 +1,4 @@
-require 'rubygems'
-require 'bundler/setup'
-
-require 'simplecov'
-SimpleCov.start
-
-require 'rspec'
-require_relative '../lib/dsl'
+require 'spec_helper'
 
 def parse(&block)
   DSL.parse &block
@@ -50,7 +43,8 @@ describe 'Service' do
         end
       end
     }
-    example.healthy?.should == true
+    result, _ = example.healthy?
+    result.should == true
   end
 
   it 'should take and execute a health check with options' do
@@ -62,7 +56,8 @@ describe 'Service' do
         end
       end
     }
-    example.healthy?.should == true
+    result, _ = example.healthy?
+    result.should == true
     example.check_interval.should == 60
   end
 
@@ -75,7 +70,8 @@ describe 'Service' do
         end
       end
     }
-    example.host_healthy?.should == true
+    result, _ = example.host_healthy?
+    result.should == true
     example.host_check_interval.should == 30
   end
 
@@ -88,7 +84,8 @@ describe 'Service' do
         end
       end
     }
-    example.host_healthy?.should == true
+    result, _ = example.host_healthy?
+    result.should == true
     example.host_check_interval.should == 15
   end
 
@@ -172,7 +169,8 @@ describe 'Component' do
         end
       end
     }
-    example.healthy?.should == true
+    result, _ = example.healthy?
+    result.should == true
   end
 
   it 'should take dependencies' do

@@ -4,7 +4,7 @@ require 'open_uri_redirections'
 module Checks
   def self.execute(&block)
     self.instance_eval &block
-    true
+    [true, "Passed"]
   rescue Exception => e
     [false, e.message]
   end
@@ -56,8 +56,12 @@ module Checks
     0.9
   end
 
-  def self.memory_usage
-    Unit('51MB')
+  def self.process_cpu_load(process)
+    process_info(process)[:cpu_percentage]
+  end
+
+  def self.memory_usage(process)
+    process_info(process)[:resident_set]
   end
 
   def self.disk_usage(mount = "/")
@@ -78,5 +82,20 @@ module Checks
     result = $?.success?
     failed "Process #{process} not running" unless result
     result
+  end
+
+  def self.process_info(process)
+    output = `ps aux | grep #{process} | grep -v grep`
+    raise "Process #{process} has #{output.lines.length} matches" unless output.lines.length == 1
+    parts = output.split(/\s+/)
+    {
+      user: parts[0],
+      pid: parts[1],
+      cpu_percentage: Unit.new(parts[2] + "%"),
+      memory_percentage: Unit.new(parts[3] + "%"),
+      virtual_size: Unit.new(parts[4] + " kb"),
+      resident_set: Unit.new(parts[5] + " kb"),
+      process_name: parts[10]
+    }
   end
 end
