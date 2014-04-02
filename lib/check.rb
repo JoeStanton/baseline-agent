@@ -36,11 +36,11 @@ class Check
   def notify_endpoint
     case @type
     when :host
-      "/hosts/#{@host}"
+      "hosts/#{@host}"
     when :service
-      "/services/#{StringHelpers.slugify(@service)}"
+      "services/#{StringHelpers.slugify(@service)}"
     when :component
-      "/services/#{StringHelpers.slugify(@service)}/components/#{StringHelpers.slugify(@component)}"
+      "services/#{StringHelpers.slugify(@service)}/components/#{StringHelpers.slugify(@component)}"
     end
   end
 
