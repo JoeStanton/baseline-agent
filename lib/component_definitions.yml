@@ -1,0 +1,37 @@
+web-server:
+  Nginx:
+    process: nginx
+    version: nginx -v 2>&1 | cut -d '/' -f2
+queue:
+  RabbitMQ:
+    ports: 15672
+    process: rabbit
+    path: rabbitctl
+    version: rabbitmqctl status|grep rabbit
+database:
+  Postgres:
+    process: postgres
+    description: relational database
+    ports: 5432
+    version: postgres --version | cut -d ' ' -f3
+  MySQL:
+    process: mysqld
+    description: relational database
+    ports: 3306
+    version: mysql --version
+  ElasticSearch:
+    description: open source search and analytics engine
+    process: elasticsearch
+    ports: 9200
+    version: elasticsearch -v 2>&1 | cut -d ',' -f 1 | cut -d':' -f 2
+  MongoDB:
+    process: mongod
+    description: open-source document database
+    ports: 27017
+    version: mongod --version | grep db | cut -d ' ' -f 3
+  Redis:
+    description: simple networked key value store
+    process: redis-server
+    check: redis-cli ping
+    ports: 6379
+    version: redis-server -v | cut -d ' ' -f 3 | cut -d '=' -f 2

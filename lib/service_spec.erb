@@ -1,0 +1,14 @@
+service '<%= name %>' do
+<% components.each do |c| %>
+  component '<%= c.name %>' do
+    description '<%= c.description %>'
+    type :<%= c.type %> 
+    version '<%= c.version %>'
+
+    health do
+      running '<%= c.process %>'
+      listening <%= c.ports %> 
+    end
+  end
+<% end %>
+end

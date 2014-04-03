@@ -1,7 +1,0 @@
-service '<%= name %>' do
-<% components.each do |c| %>
-  component '<%= c[:name] %>' do
-    type :<%= c[:type] %>
-  end
-<% end %>
-end
