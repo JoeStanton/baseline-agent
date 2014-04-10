@@ -1,6 +1,6 @@
 require_relative '../lib/graph'
 
-class LighthouseAgent
+class BaselineAgent
   desc :graph, 'Render a graph of the current service'
   def graph(system)
     system = load_system(system)

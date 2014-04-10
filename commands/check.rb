@@ -1,4 +1,4 @@
-class LighthouseAgent
+class BaselineAgent
   desc :check, "Run configured health checks"
 
   def check(system)

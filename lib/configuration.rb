@@ -1,5 +1,5 @@
 require 'yaml'
-PATH = "#{Dir.home}/.lighthouse"
+PATH = "#{Dir.home}/.baseline"
 
 class Configuration
   attr_accessor :management_server

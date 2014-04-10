@@ -20,7 +20,7 @@ module Checks
 
     http.start do |http|
       req = Net::HTTP::Head.new(uri.request_uri)
-      req['User-Agent'] = "LighthouseAgent"
+      req['User-Agent'] = "Baseline Agent"
       req['Host'] = uri.host
 
       if uri.user && uri.password

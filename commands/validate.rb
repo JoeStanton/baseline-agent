@@ -1,4 +1,4 @@
-class LighthouseAgent
+class BaselineAgent
   desc :validate, "Validates a system definition"
   def validate(system)
     load_system(system)

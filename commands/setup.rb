@@ -1,7 +1,7 @@
 require 'socket'
 require 'rest_client'
 
-class LighthouseAgent
+class BaselineAgent
   desc :setup, "Register this host with the management server"
   method_option :service, required: false
   method_option :environment, default: "development"

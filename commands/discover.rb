@@ -1,6 +1,6 @@
 require_relative '../lib/service_spec'
 
-class LighthouseAgent
+class BaselineAgent
   desc :discover, "Creates a service definition from detected system services"
 
   def discover

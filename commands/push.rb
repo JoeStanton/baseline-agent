@@ -1,6 +1,6 @@
 require 'rest_client'
 
-class LighthouseAgent
+class BaselineAgent
   desc :push, "Pushes the specified service to a management server"
 
   def push(system)

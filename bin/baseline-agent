@@ -14,7 +14,7 @@ require_relative '../lib/configuration'
 require_relative '../lib/dsl'
 require_relative '../lib/string_helpers'
 
-class LighthouseAgent < Thor
+class BaselineAgent < Thor
   VERSION = 0.1
 
   no_commands do
@@ -32,4 +32,4 @@ require_relative '../commands/monitor'
 require_relative '../commands/discover'
 require_relative '../commands/push'
 
-LighthouseAgent.start(ARGV)
+BaselineAgent.start(ARGV)

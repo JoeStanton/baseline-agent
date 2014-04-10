@@ -3,7 +3,7 @@ require 'dante'
 require_relative '../lib/monitor'
 Thread.abort_on_exception=true
 
-class LighthouseAgent
+class BaselineAgent
   desc :start, "Continuously monitor the specified service"
   def start(system)
     return puts 'Must run as root'.red unless Process.uid == 0
@@ -27,7 +27,7 @@ class LighthouseAgent
 
   no_commands {
     def process_name(system)
-      "lighthouse-#{StringHelpers.slugify(system.services.first.name)}"
+      "baseline-#{StringHelpers.slugify(system.services.first.name)}"
     end
   }
 
