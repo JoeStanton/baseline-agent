@@ -22,7 +22,7 @@ class BaselineAgent
   def restart(system)
     return puts 'Must run as root (or use sudo)'.red unless Process.uid == 0
     stop(system)
-    start_monitor(system)
+    start(system)
   end
 
   no_commands {
