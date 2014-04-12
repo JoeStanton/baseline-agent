@@ -6,21 +6,23 @@ Thread.abort_on_exception=true
 class BaselineAgent
   desc :start, "Continuously monitor the specified service"
   def start(system)
-    return puts 'Must run as root (or use sudo)'.red unless Process.uid == 0
+    require_root!
+    require_setup!
     system = load_system(system)
     Dante::Runner.new(process_name(system)).execute(daemonize: true) { Monitor.start!(system) }
   end
 
   desc :stop, "Stop monitoring the specified service"
   def stop(system)
-    return puts 'Must run as root (or use sudo)'.red unless Process.uid == 0
+    require_root!
     system = load_system(system)
     Dante::Runner.new(process_name(system)).execute(kill: true)
   end
 
   desc :restart, "Restart monitoring the specified service"
   def restart(system)
-    return puts 'Must run as root (or use sudo)'.red unless Process.uid == 0
+    require_root!
+    require_setup!
     stop(system)
     start(system)
   end

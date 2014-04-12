@@ -21,6 +21,19 @@ class BaselineAgent < Thor
     def load_system(system)
       @system = DSL.load system
     end
+
+    def error(message)
+      puts message.red
+      Process.exit(1)
+    end
+
+    def require_root!
+      error 'Must run as root (or use sudo)' unless Process.uid == 0
+    end
+
+    def require_setup!
+      error 'Agent not linked to a management server, please run the "setup" command' unless Configuration.load.management_server
+    end
   end
 end
 
