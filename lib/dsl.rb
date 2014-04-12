@@ -117,4 +117,20 @@ class Component < Node
   def public_listen(port)
     @public_ports << port
   end
+
+  def type(value = nil)
+    if value
+      @type = value
+    else
+      @type
+    end
+  end
+
+  def version(value = nil)
+    if value
+      @version = value
+    else
+      @version
+    end
+  end
 end
