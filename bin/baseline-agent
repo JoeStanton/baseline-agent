@@ -45,5 +45,8 @@ require_relative '../commands/monitor'
 require_relative '../commands/discover'
 require_relative '../commands/push'
 require_relative '../commands/pull'
+require_relative '../commands/event'
+require_relative '../commands/events/config'
+require_relative '../commands/events/deploy'
 
 BaselineAgent.start(ARGV)
