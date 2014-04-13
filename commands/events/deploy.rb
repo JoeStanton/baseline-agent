@@ -19,14 +19,14 @@ class BaselineAgent
     end
 
     send_event({
-      type: "deployment",
+      type: "Deployment",
       repo: options.repo || "#{user}/#{repo}",
       branch: options.branch || branch,
       commit: options.commit || "#{msg} (#{sha})",
       url: options.url || url,
       service_slug: options.service,
       author: options.author || author,
-      host: options.host || Socket.gethostname
+      host_slug: options.host || Socket.gethostname
     })
   end
 end

@@ -9,12 +9,12 @@ class BaselineAgent
 
   define_method 'event:config' do
     send_event({
-      type: :configuration,
+      type: "Configuration",
       service_slug: options.service,
-      description: options.description,
+      message: options.description,
       url: options.url,
       author: options.author,
-      host: options.host || Socket.gethostname
+      host_slug: options.host || Socket.gethostname
     })
   end
 end
