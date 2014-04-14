@@ -103,6 +103,12 @@ devfs                430       430         0   100%    /dev
       result.should be_true
     end
 
+    it "accepts basic auth credentials" do
+      stub_request(:head, "a:b@www.example.com")
+      result = Checks.success("http://a:b@www.example.com")
+      result.should be_true
+    end
+
     it "fails when the request errors" do
       stub_request(:head, "www.example.com").to_return(status: 500)
       expect {
