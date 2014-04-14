@@ -11,7 +11,7 @@ class ServiceSpec
 
   def load_definitions
     services = []
-    categories = YAML.load_file 'lib/component_definitions.yml'
+    categories = YAML.load_file "#{base_path}/component_definitions.yml"
     categories.each do |category, components|
       components.each do |name, component|
         merged = { "type" => category, "name" => name }.merge(component)
@@ -28,9 +28,14 @@ class ServiceSpec
   end
 
   def render
-    base_path = File.expand_path(File.dirname(__FILE__))
     template = File.read "#{base_path}/service_spec.erb"
     ERB.new(template, 0, '>').result(binding)
+  end
+
+  private
+
+  def base_path
+    File.expand_path(File.dirname(__FILE__))
   end
 end
 

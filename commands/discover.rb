@@ -5,11 +5,12 @@ class BaselineAgent
 
   def discover
     name = ask "Please enter a service name:"
+    error "you must enter a service name" unless name
+
     filename = "#{name.downcase.gsub(' ', '_').gsub(/[^0-9A-Za-z_]/, '')}.rb"
 
-    File.open filename , 'w' do |f|
-      f.write ServiceSpec.new(name).detect!.render
-    end
+    content = ServiceSpec.new(name).detect!.render
+    File.write filename, content
 
     pid = spawn "$EDITOR #{filename}"
     Process.wait(pid)

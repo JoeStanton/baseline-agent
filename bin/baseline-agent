@@ -1,52 +1,9 @@
 #!/usr/bin/env ruby
 require 'bundler'
+
 Dir.chdir File.join(File.dirname(__FILE__), '..') do
   Bundler.setup
 end
 
-require 'redis'
-Redis.new
-
-require 'thor'
-require 'colorize'
-
-require_relative '../lib/configuration'
-require_relative '../lib/dsl'
-require_relative '../lib/string_helpers'
-
-class BaselineAgent < Thor
-  VERSION = 0.1
-
-  no_commands do
-    def load_system(system)
-      @system = DSL.load system
-    end
-
-    def error(message)
-      puts message.red
-      Process.exit(1)
-    end
-
-    def require_root!
-      error 'Must run as root (or use sudo)' unless Process.uid == 0
-    end
-
-    def require_setup!
-      error 'Agent not linked to a management server, please run the "setup" command' unless Configuration.load.management_server
-    end
-  end
-end
-
-require_relative '../commands/validate'
-require_relative '../commands/setup'
-require_relative '../commands/check'
-require_relative '../commands/graph'
-require_relative '../commands/monitor'
-require_relative '../commands/discover'
-require_relative '../commands/push'
-require_relative '../commands/pull'
-require_relative '../commands/event'
-require_relative '../commands/events/config'
-require_relative '../commands/events/deploy'
-
+require_relative '../lib/runner'
 BaselineAgent.start(ARGV)

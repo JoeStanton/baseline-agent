@@ -8,6 +8,9 @@ gem 'ruby-graphviz'
 
 gem 'rspec'
 gem 'webmock'
+gem 'cucumber'
+gem 'aruba'
+
 gem 'simplecov', :require => false, :group => :test
 
 gem 'thor'
