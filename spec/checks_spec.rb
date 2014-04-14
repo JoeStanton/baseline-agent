@@ -81,6 +81,21 @@ devfs                430       430         0   100%    /dev
     end
   end
 
+  describe "process_cpu_load" do
+    it "should return the CPU percentage as a unit" do
+      Checks.should_receive(:`).and_return("Joe  400   0.0  0.2  2097152  17492   ??  S    11:21pm   0:04.63 process_name")
+      Checks.process_cpu_load('sample').should == "0.0 %"
+    end
+  end
+
+  describe "memory_usage" do
+    it "should return memory usage for the given process as a unit" do
+      Checks.should_receive(:`).and_return("Joe  400   0.0  0.2  2097152  17492   ??  S    11:21pm   0:04.63 process_name")
+      Checks.memory_usage('sample').should be_within("1Mb").of "17Mb"
+    end
+  end
+
+
   #describe "HTTP success check" do
   #it "passes when the request is successful" do
   #result = Checks.execute {  "." }
