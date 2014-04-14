@@ -1,4 +1,4 @@
 language: ruby
-script: bundle exec rspec
+script: bundle exec rspec && bundle exec cucumber
 rvm:
     - 2.0.0
