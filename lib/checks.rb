@@ -28,8 +28,10 @@ module Checks
       end
 
       response = http.request(req)
-      unless response.kind_of?(Net::HTTPSuccess) || response.kind_of?(Net::HTTPRedirection)
-        fail "Unexpected response #{response.class}" 
+      if response.kind_of?(Net::HTTPSuccess) || response.kind_of?(Net::HTTPRedirection)
+        true
+      else
+        fail "Unexpected response #{response.class}"
       end
     end
   end
@@ -46,10 +48,6 @@ module Checks
     end
   rescue Timeout::Error
     fail "Socket timed out"
-  end
-
-  def self.cpu_load_average
-    0.9
   end
 
   def self.process_cpu_load(process)

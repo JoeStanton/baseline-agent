@@ -74,7 +74,7 @@ describe Checks do
 Filesystem    512-blocks      Used Available Capacity  Mounted on
 /dev/disk1     487900168 433215576  54172592    89%    /
 devfs                430       430         0   100%    /dev
-       """)
+                                                 """)
 
       Checks.disk_usage.should == "89%"
       Checks.disk_usage("/dev").should == "100%"
@@ -96,16 +96,18 @@ devfs                430       430         0   100%    /dev
   end
 
 
-  #describe "HTTP success check" do
-  #it "passes when the request is successful" do
-  #result = Checks.execute {  "." }
-  #result.should be_true
-  #end
+  describe "HTTP success check" do
+    it "passes when the request is successful" do
+      stub_request(:head, "www.example.com")
+      result = Checks.success("http://www.example.com")
+      result.should be_true
+    end
 
-  #it "fails when the process isnt running" do
-  #result, message = Checks.execute { running "nonexistantproc" }
-  #result.should be_false
-  #message.should == "Process nonexistantproc not running"
-  #end
-  #end
+    it "fails when the request errors" do
+      stub_request(:head, "www.example.com").to_return(status: 500)
+      expect {
+        Checks.success("http://www.example.com")
+      }.to raise_error "Unexpected response Net::HTTPInternalServerError"
+    end
+  end
 end
