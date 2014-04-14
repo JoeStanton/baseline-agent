@@ -22,4 +22,5 @@ gem 'open_uri_redirections'
 
 gem 'riemann-client'
 
-eval File.read('Pluginfile'), nil, 'Pluginfile' if File.exists?('Pluginfile')
+plugins = "#{File.expand_path(File.dirname(__FILE__))}/Pluginfile"
+eval File.read(plugins), nil, 'Pluginfile' if plugins
