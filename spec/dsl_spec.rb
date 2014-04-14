@@ -5,6 +5,15 @@ def parse(&block)
 end
 
 describe 'System' do
+  it 'should load from a file correctly' do
+    File.should_receive(:read).with('example-system.rb').and_return """
+      service 'Example Service'
+    """
+    service = DSL.load('example-system.rb').services.first
+    service.should be_kind_of Service
+    service.name.should == 'Example Service'
+  end
+
   it 'should keep track of declared services' do
     example = nil
     system = parse {
@@ -156,6 +165,32 @@ describe 'Component' do
     }
 
     example.public_ports.should == [80]
+  end
+
+  it 'should take a type' do
+    example = nil
+    parse {
+      example = service 'Workspace +' do
+        component 'Web Server' do
+          type :webserver
+        end
+      end
+    }
+
+    example.components.first.type.should == :webserver
+  end
+
+  it 'should take a version' do
+    example = nil
+    parse {
+      example = service 'Workspace +' do
+        component 'Web Server' do
+          version '0.1.0'
+        end
+      end
+    }
+
+    example.components.first.version.should == '0.1.0'
   end
 
   it 'should take and execute a health check' do
