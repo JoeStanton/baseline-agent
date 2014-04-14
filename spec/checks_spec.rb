@@ -68,16 +68,29 @@ describe Checks do
     end
   end
 
-  #describe "HTTP success check" do
-    #it "passes when the request is successful" do
-      #result = Checks.execute {  "." }
-      #result.should be_true
-    #end
+  describe "disk_usage check" do
+    it "should extract the usage as a Unit" do
+      Checks.should_receive(:`).twice.and_return("""
+Filesystem    512-blocks      Used Available Capacity  Mounted on
+/dev/disk1     487900168 433215576  54172592    89%    /
+devfs                430       430         0   100%    /dev
+       """)
 
-    #it "fails when the process isnt running" do
-      #result, message = Checks.execute { running "nonexistantproc" }
-      #result.should be_false
-      #message.should == "Process nonexistantproc not running"
-    #end
+      Checks.disk_usage.should == "89%"
+      Checks.disk_usage("/dev").should == "100%"
+    end
+  end
+
+  #describe "HTTP success check" do
+  #it "passes when the request is successful" do
+  #result = Checks.execute {  "." }
+  #result.should be_true
+  #end
+
+  #it "fails when the process isnt running" do
+  #result, message = Checks.execute { running "nonexistantproc" }
+  #result.should be_false
+  #message.should == "Process nonexistantproc not running"
+  #end
   #end
 end

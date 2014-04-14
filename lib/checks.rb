@@ -67,10 +67,7 @@ module Checks
         return Unit.new(f[4])
       end
     end
-  end
-
-  def self.response_time(url)
-    '1s'
+    nil
   end
 
   def self.running(process)

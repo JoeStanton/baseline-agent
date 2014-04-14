@@ -52,6 +52,7 @@ describe 'Service' do
         end
       end
     }
+    example.health.should be_a_kind_of Proc
     result, _ = example.healthy?
     result.should == true
   end
@@ -79,6 +80,7 @@ describe 'Service' do
         end
       end
     }
+    example.host_health.should be_a_kind_of Proc
     result, _ = example.host_healthy?
     result.should == true
     example.host_check_interval.should == 30
