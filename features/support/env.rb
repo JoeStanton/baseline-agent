@@ -1,7 +1,7 @@
 require 'aruba/cucumber'
 require 'aruba/in_process'
 
-require_relative '../../lib/runner'
+require_relative '../../bin/runner'
 Aruba::InProcess.main_class = Runner
 Aruba.process = Aruba::InProcess
 

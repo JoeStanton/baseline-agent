@@ -5,5 +5,5 @@ Dir.chdir File.join(File.dirname(__FILE__), '..') do
   Bundler.setup
 end
 
-require_relative '../lib/runner'
+require_relative 'runner'
 BaselineAgent.start(ARGV)
