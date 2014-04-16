@@ -22,7 +22,7 @@ class BaselineAgent
       type: "Deployment",
       repo: options.repo || "#{user}/#{repo}",
       branch: options.branch || branch,
-      commit: options.commit || "#{msg} (#{sha})",
+      message: options.commit || "#{msg} (#{sha})",
       url: options.url || url,
       service_slug: options.service,
       author: options.author || author,

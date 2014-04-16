@@ -1,6 +1,10 @@
 require 'aruba/cucumber'
 require 'aruba/in_process'
 
+require 'simplecov'
+SimpleCov.start
+SimpleCov.use_merging true
+
 require_relative '../../bin/runner'
 Aruba::InProcess.main_class = Runner
 Aruba.process = Aruba::InProcess

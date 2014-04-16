@@ -6,4 +6,4 @@ SimpleCov.start
 
 require 'rspec'
 require 'webmock/rspec'
-require_relative '../lib/dsl'
+require_relative '../commands/main'
