@@ -1,6 +1,7 @@
-web-server:
+webserver:
   Nginx:
     process: nginx
+    port: 80
     version: nginx -v 2>&1 | cut -d '/' -f2
 queue:
   RabbitMQ:
