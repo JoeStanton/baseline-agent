@@ -91,7 +91,7 @@ end
 
 class Service < Node
   attr_accessor :components
-  hashify :name, :description, components: -> { components.map(&:to_hash) }
+  hashify :name, :description, :dependencies, components: -> { components.map(&:to_hash) }
 
   def initialize(name)
     super
@@ -108,7 +108,7 @@ end
 
 class Component < Node
   attr_accessor :private_ports, :public_ports
-  hashify :name, :description
+  hashify :name, :description, :dependencies
 
   def listen(port)
     @private_ports << port
