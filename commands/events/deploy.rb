@@ -14,7 +14,7 @@ class BaselineAgent
 
     origin = `git config --get remote.origin.url`
     if origin.include? "github"
-      user, repo = origin.match(/([\w-]+)\/([\w-]+).(git)?$/).captures
+      user, repo = origin.match(/([\w-]+)\/([\w-]+)(\.git)?$/).captures
       url = "https://github.com/#{user}/#{repo}/commit/#{sha}"
     end
 
