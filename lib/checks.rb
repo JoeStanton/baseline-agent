@@ -1,7 +1,15 @@
 require 'ruby-units'
 require 'open_uri_redirections'
+require_relative 'integration_test'
+
+require 'socket'
+require 'openssl'
 
 module Checks
+  def self.integration(*args, &block)
+    IntegrationTest.new(*args).run(&block)
+  end
+
   def self.execute(&block)
     self.instance_eval &block
     [true, "Passed"]
